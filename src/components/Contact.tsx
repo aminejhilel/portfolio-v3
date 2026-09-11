@@ -27,7 +27,7 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-slate-950 relative border-t border-slate-900">
+    <section id="contact" className="py-24 bg-[#030b1a] relative border-t border-slate-900/80 overflow-hidden">
       {/* Glow effect background */}
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -45,7 +45,7 @@ export default function Contact() {
             <Mail className="w-3.5 h-3.5" />
             <span>Prendre Contact</span>
           </div>
-          <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h2 className="font-display text-4xl sm:text-5xl font-black text-white tracking-tight">
             Contact & Informations
           </h2>
           <p className="text-slate-400 text-sm sm:text-base">

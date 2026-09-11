@@ -1,32 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
+/* ============================================
+   CSS Custom Properties / Design Tokens
+   ============================================ */
+:root {
+  --amber-glow: rgba(245, 158, 11, 0.35);
+  --emerald-glow: rgba(16, 185, 129, 0.25);
+  --blue-glow: rgba(59, 130, 246, 0.2);
+  --bg-primary: #020817;
+  --bg-secondary: #060d1f;
+  --bg-card: rgba(15, 23, 42, 0.7);
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-glow: rgba(245, 158, 11, 0.3);
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-primary);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(245, 158, 11, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(16, 185, 129, 0.07) 0%, transparent 50%),
+    radial-gradient(ellipse 40% 30% at 20% 60%, rgba(59, 130, 246, 0.06) 0%, transparent 40%);
+  background-attachment: fixed;
+}
+
+/* ============================================
+   Typography Utilities
+   ============================================ */
 @layer utilities {
   .font-heading {
-    font-family: var(--font-outfit), system-ui, sans-serif;
+    font-family: 'Outfit', 'Space Grotesk', system-ui, sans-serif;
+    letter-spacing: -0.02em;
   }
   .font-body {
-    font-family: var(--font-jakarta), system-ui, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  }
+  .font-display {
+    font-family: 'Space Grotesk', 'Outfit', system-ui, sans-serif;
+    letter-spacing: -0.03em;
+  }
+  .font-mono-code {
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
   }
 
-  /* Glassmorphism Cards */
+  /* ============================================
+     Glassmorphism Cards
+     ============================================ */
   .glass-card {
-    background: rgba(15, 23, 42, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(13, 20, 40, 0.72);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.07);
   }
 
   .glass-card-hover {
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .glass-card-hover:hover {
-    background: rgba(30, 41, 59, 0.85);
-    border-color: rgba(245, 158, 11, 0.4);
-    box-shadow: 0 15px 35px -10px rgba(245, 158, 11, 0.2), 0 0 15px 0 rgba(16, 185, 129, 0.1);
-    transform: translateY(-3px) scale(1.01);
+    background: rgba(25, 35, 60, 0.85);
+    border-color: rgba(245, 158, 11, 0.35);
+    box-shadow:
+      0 20px 40px -12px rgba(245, 158, 11, 0.2),
+      0 0 25px 0 rgba(16, 185, 129, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transform: translateY(-4px) scale(1.01);
   }
 
-  /* Animated Solar Glow Effects */
+  /* ============================================
+     Animated Solar Glow Effects
+     ============================================ */
   .solar-glow-card {
     position: relative;
     overflow: hidden;
@@ -38,10 +87,17 @@
     left: -50%;
     width: 200%;
     height: 200%;
-    background: conic-gradient(from 0deg at 50% 50%, rgba(245, 158, 11, 0) 0deg, rgba(245, 158, 11, 0.25) 180deg, rgba(16, 185, 129, 0) 360deg);
-    animation: rotateGlow 8s linear infinite;
+    background: conic-gradient(
+      from 0deg at 50% 50%,
+      rgba(245, 158, 11, 0) 0deg,
+      rgba(245, 158, 11, 0.2) 90deg,
+      rgba(16, 185, 129, 0.15) 180deg,
+      rgba(59, 130, 246, 0.1) 270deg,
+      rgba(245, 158, 11, 0) 360deg
+    );
+    animation: rotateGlow 10s linear infinite;
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.6s ease;
     pointer-events: none;
     z-index: 0;
   }
@@ -49,38 +105,124 @@
     opacity: 1;
   }
 
-  /* Solar Grid Background Overlay */
-  .bg-solar-grid {
-    background-size: 40px 40px;
-    background-image: 
-      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  /* ============================================
+     Noise Texture Overlay
+     ============================================ */
+  .noise-overlay::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.06;
+    pointer-events: none;
+    z-index: 1;
+    border-radius: inherit;
   }
 
-  /* Text Gradients */
+  /* ============================================
+     Solar Grid Background Overlay
+     ============================================ */
+  .bg-solar-grid {
+    background-size: 50px 50px;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  }
+
+  /* ============================================
+     Text Gradients
+     ============================================ */
   .text-gradient-amber {
-    background: linear-gradient(135deg, #fef08a 0%, #f59e0b 50%, #d97706 100%);
+    background: linear-gradient(135deg, #fef3c7 0%, #fbbf24 40%, #f59e0b 70%, #d97706 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .text-gradient-emerald {
-    background: linear-gradient(135deg, #a7f3d0 0%, #10b981 50%, #047857 100%);
+    background: linear-gradient(135deg, #a7f3d0 0%, #34d399 40%, #10b981 70%, #059669 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .text-gradient-solar {
-    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 40%, #10b981 80%, #3b82f6 100%);
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 30%, #10b981 65%, #3b82f6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
+  .text-gradient-blue {
+    background: linear-gradient(135deg, #bfdbfe 0%, #60a5fa 40%, #3b82f6 70%, #1d4ed8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ============================================
+     Background Gradients
+     ============================================ */
   .bg-radial-solar {
-    background: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.18) 0%, rgba(16, 185, 129, 0.08) 35%, rgba(15, 23, 42, 0) 70%);
+    background: radial-gradient(
+      ellipse 100% 60% at 50% 0%,
+      rgba(245, 158, 11, 0.15) 0%,
+      rgba(16, 185, 129, 0.06) 40%,
+      rgba(15, 23, 42, 0) 70%
+    );
+  }
+
+  /* ============================================
+     Section Dividers
+     ============================================ */
+  .section-divider {
+    background: linear-gradient(90deg, transparent 0%, rgba(245, 158, 11, 0.3) 50%, transparent 100%);
+    height: 1px;
+    width: 100%;
+  }
+
+  /* ============================================
+     Shine Effect on Hover
+     ============================================ */
+  .shine-hover {
+    position: relative;
+    overflow: hidden;
+  }
+  .shine-hover::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.06),
+      transparent
+    );
+    transition: left 0.6s ease;
+  }
+  .shine-hover:hover::after {
+    left: 140%;
+  }
+
+  /* ============================================
+     Glow Button
+     ============================================ */
+  .btn-glow {
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.35), 0 4px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+  }
+  .btn-glow:hover {
+    box-shadow: 0 0 35px rgba(245, 158, 11, 0.5), 0 8px 25px rgba(0, 0, 0, 0.4);
+    transform: translateY(-2px);
   }
 }
 
+/* ============================================
+   Keyframe Animations
+   ============================================ */
 @keyframes rotateGlow {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -88,33 +230,166 @@
 
 @keyframes floatSlow {
   0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(2deg); }
-}
-
-.animate-float {
-  animation: floatSlow 6s ease-in-out infinite;
+  33% { transform: translateY(-12px) rotate(1.5deg); }
+  66% { transform: translateY(-6px) rotate(-1deg); }
 }
 
 @keyframes pulseFlare {
-  0%, 100% { opacity: 0.25; transform: scale(1); }
-  50% { opacity: 0.55; transform: scale(1.08); }
+  0%, 100% { opacity: 0.2; transform: scale(1); }
+  50% { opacity: 0.45; transform: scale(1.12); }
+}
+
+@keyframes slideUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes borderPulse {
+  0%, 100% { border-color: rgba(245, 158, 11, 0.3); }
+  50% { border-color: rgba(245, 158, 11, 0.7); }
+}
+
+@keyframes sunRays {
+  0% { transform: rotate(0deg) scale(1); opacity: 0.6; }
+  50% { transform: rotate(180deg) scale(1.1); opacity: 1; }
+  100% { transform: rotate(360deg) scale(1); opacity: 0.6; }
+}
+
+@keyframes counterUp {
+  0% { transform: translateY(100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.3), 0 0 20px rgba(245, 158, 11, 0.1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.6), 0 0 40px rgba(245, 158, 11, 0.2);
+  }
+}
+
+@keyframes textReveal {
+  0% { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0% 0 0); }
+}
+
+/* ============================================
+   Animation Classes
+   ============================================ */
+.animate-float {
+  animation: floatSlow 7s ease-in-out infinite;
 }
 
 .animate-pulse-flare {
-  animation: pulseFlare 7s ease-in-out infinite;
+  animation: pulseFlare 8s ease-in-out infinite;
 }
 
-/* Custom Scrollbar */
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.08) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+}
+
+.animate-border-pulse {
+  animation: borderPulse 3s ease-in-out infinite;
+}
+
+.animate-sun-rays {
+  animation: sunRays 12s linear infinite;
+}
+
+.animate-glow-pulse {
+  animation: glowPulse 2.5s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.7s ease-out forwards;
+}
+
+/* ============================================
+   Custom Scrollbar
+   ============================================ */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #090d16;
+  background: #020817;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
-  border-radius: 4px;
+  background: linear-gradient(to bottom, #f59e0b, #10b981);
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #f59e0b;
+  background: linear-gradient(to bottom, #fbbf24, #34d399);
+}
+
+/* ============================================
+   Selection Styling
+   ============================================ */
+::selection {
+  background: rgba(245, 158, 11, 0.3);
+  color: #fef3c7;
+}
+
+/* ============================================
+   Particle Dots Background
+   ============================================ */
+.particle-bg {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* ============================================
+   Stats Counter Overflow
+   ============================================ */
+.counter-clip {
+  overflow: hidden;
+}
+
+/* ============================================
+   Gradient Borders
+   ============================================ */
+.gradient-border {
+  position: relative;
+  background-clip: padding-box;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.5), rgba(16, 185, 129, 0.3), rgba(59, 130, 246, 0.3));
+  z-index: -1;
+}
+
+/* ============================================
+   Smooth Underline
+   ============================================ */
+.underline-animated {
+  position: relative;
+}
+.underline-animated::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #f59e0b, #10b981);
+  transition: width 0.4s ease;
+  border-radius: 2px;
+}
+.underline-animated:hover::after {
+  width: 100%;
 }

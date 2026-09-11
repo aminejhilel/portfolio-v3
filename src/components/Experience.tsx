@@ -61,7 +61,7 @@ export default function Experience() {
   ];
 
   return (
-    <section id="experience" className="py-20 bg-slate-900/50 relative border-t border-slate-900">
+    <section id="experience" className="py-24 bg-[#020817] relative border-t border-slate-900/80 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Title */}
@@ -76,7 +76,7 @@ export default function Experience() {
             <Briefcase className="w-3.5 h-3.5" />
             <span>Parcours & Qualifications</span>
           </div>
-          <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h2 className="font-display text-4xl sm:text-5xl font-black text-white tracking-tight">
             Expériences & Formations
           </h2>
           <p className="text-slate-400 text-sm sm:text-base">

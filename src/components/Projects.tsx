@@ -71,7 +71,7 @@ export default function Projects() {
   ];
 
   return (
-    <section id="projects" className="py-20 bg-slate-950 relative border-t border-slate-900">
+    <section id="projects" className="py-24 bg-[#030b1a] relative border-t border-slate-900/80 overflow-hidden">
       {/* Background light glow */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
 
@@ -89,7 +89,7 @@ export default function Projects() {
             <FolderGit2 className="w-3.5 h-3.5" />
             <span>Réalisations Concrètes</span>
           </div>
-          <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+          <h2 className="font-display text-4xl sm:text-5xl font-black text-white tracking-tight">
             Projets Académiques & Études Techniques
           </h2>
           <p className="text-slate-400 text-sm sm:text-base">
