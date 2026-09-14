@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FolderGit2, Sun, Zap, CheckCircle2, Building, BarChart3, Compass } from "lucide-react";
+import { FolderGit2, Zap, CheckCircle2, Building, BarChart3, Compass } from "lucide-react";
 
 export default function Projects() {
   const [activeProject, setActiveProject] = useState<number>(0);
@@ -26,7 +26,7 @@ export default function Projects() {
         { label: "Orientation", value: "Est - Ouest" },
         { label: "Lieu", value: "LEAR Meknès" },
       ],
-      tagColor: "bg-amber-500/10 text-amber-400 border-amber-500/30",
+      tagColor: "bg-amber-100 text-amber-950 border-amber-300",
     },
     {
       id: 1,
@@ -46,7 +46,7 @@ export default function Projects() {
         { label: "Bilan", value: "Émissions CO₂" },
         { label: "Lieu", value: "Kénitra" },
       ],
-      tagColor: "bg-emerald-500/10 text-emerald-400 border-emerald-500/30",
+      tagColor: "bg-emerald-100 text-emerald-950 border-emerald-300",
     },
     {
       id: 2,
@@ -66,15 +66,12 @@ export default function Projects() {
         { label: "DAO", value: "AutoCAD 2D" },
         { label: "Lieu", value: "IFMEREE Oujda" },
       ],
-      tagColor: "bg-blue-500/10 text-blue-400 border-blue-500/30",
+      tagColor: "bg-sky-100 text-sky-950 border-sky-300",
     },
   ];
 
   return (
-    <section id="projects" className="py-24 bg-[#030b1a] relative border-t border-slate-900/80 overflow-hidden">
-      {/* Background light glow */}
-      <div className="absolute top-1/2 left-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none" />
-
+    <section id="projects" className="py-24 paper-canvas relative border-t border-slate-200 overflow-hidden text-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Title */}
@@ -85,14 +82,14 @@ export default function Projects() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16 space-y-3"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold">
-            <FolderGit2 className="w-3.5 h-3.5" />
-            <span>Réalisations Concrètes</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 text-amber-400 text-xs font-mono font-bold shadow-md">
+            <FolderGit2 className="w-4 h-4" />
+            <span>RÉALISATIONS CONCRÈTES</span>
           </div>
-          <h2 className="font-display text-4xl sm:text-5xl font-black text-white tracking-tight">
-            Projets Académiques & Études Techniques
+          <h2 className="font-bebas text-5xl sm:text-6xl font-black text-slate-900 tracking-tight">
+            PROJETS & <span className="text-amber-500 underline decoration-amber-400 decoration-wavy decoration-2">ÉTUDES TECHNIQUES</span>
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base">
+          <p className="text-slate-700 text-base sm:text-lg leading-relaxed font-body">
             Découvrez le détail des projets de dimensionnement solaire et de conception 2D/3D réalisés.
           </p>
         </motion.div>
@@ -105,21 +102,14 @@ export default function Projects() {
               <button
                 key={proj.id}
                 onClick={() => setActiveProject(idx)}
-                className={`relative px-5 py-3 rounded-xl text-xs sm:text-sm font-bold transition-all flex items-center gap-2 border ${
+                className={`relative px-6 py-3 rounded-xl text-xs sm:text-sm font-bold font-mono transition-all flex items-center gap-2 border-2 ${
                   isActive
-                    ? "text-slate-950 border-amber-400 shadow-lg shadow-amber-500/20"
-                    : "bg-slate-900/80 text-slate-300 border-slate-800 hover:border-slate-700 hover:text-white"
+                    ? "bg-amber-400 text-slate-950 border-slate-900 shadow-lg scale-105"
+                    : "bg-white text-slate-800 border-slate-900 hover:bg-slate-100"
                 }`}
               >
-                {isActive && (
-                  <motion.span
-                    layoutId="activeProjectTab"
-                    className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-500 rounded-xl"
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  />
-                )}
-                <Zap className={`relative z-10 w-4 h-4 ${isActive ? "text-slate-950" : "text-amber-400"}`} />
-                <span className="relative z-10">{proj.clientLocation}</span>
+                <Zap className={`w-4 h-4 ${isActive ? "text-slate-950" : "text-amber-600"}`} />
+                <span>{proj.clientLocation}</span>
               </button>
             );
           })}
@@ -136,8 +126,11 @@ export default function Projects() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -25, scale: 0.98 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                className="glass-card rounded-2xl p-6 sm:p-10 border border-slate-800 shadow-2xl relative overflow-hidden"
+                className="bg-white rounded-3xl p-6 sm:p-10 border-2 border-slate-900 shadow-2xl relative overflow-hidden"
               >
+                {/* Tape Corner Header */}
+                <div className="absolute -top-3 left-10 w-28 h-6 bg-amber-300 border-x border-amber-500 -rotate-2 shadow-xs" />
+
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
                   
                   {/* Main Details (Left 7 Cols) */}
@@ -145,33 +138,33 @@ export default function Projects() {
                     
                     {/* Header Badge */}
                     <div className="flex flex-wrap items-center gap-3">
-                      <span className={`px-3.5 py-1.5 rounded-full text-xs font-bold border ${proj.tagColor}`}>
+                      <span className={`px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold border ${proj.tagColor}`}>
                         {proj.capacity}
                       </span>
-                      <span className="text-xs text-slate-400 font-mono flex items-center gap-1">
+                      <span className="text-xs text-slate-600 font-mono font-bold flex items-center gap-1">
                         <Building className="w-3.5 h-3.5 text-slate-500" />
                         {proj.clientLocation}
                       </span>
                     </div>
 
-                    <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-white leading-tight">
+                    <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
                       {proj.title}
                     </h3>
 
-                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                    <p className="text-slate-700 text-base leading-relaxed font-body">
                       {proj.summary}
                     </p>
 
                     {/* Tasks List */}
                     <div className="space-y-3 pt-2">
-                      <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                      <h4 className="text-xs font-extrabold text-slate-500 uppercase font-mono tracking-wider">
                         Livrables et Travaux Effectués :
                       </h4>
                       <div className="space-y-2.5">
                         {proj.tasks.map((task, tIdx) => (
-                          <div key={tIdx} className="flex items-start gap-3 bg-slate-900/60 p-3 rounded-xl border border-slate-800/80">
-                            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                            <span className="text-xs sm:text-sm text-slate-200">{task}</span>
+                          <div key={tIdx} className="flex items-start gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                            <span className="text-xs sm:text-sm font-medium text-slate-800">{task}</span>
                           </div>
                         ))}
                       </div>
@@ -179,14 +172,14 @@ export default function Projects() {
 
                     {/* Tool Badges */}
                     <div className="pt-2">
-                      <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                      <div className="text-xs font-extrabold text-slate-500 uppercase font-mono tracking-wider mb-2">
                         Logiciels Utilisés :
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {proj.tools.map((t) => (
                           <span
                             key={t}
-                            className="px-3 py-1 rounded-lg bg-slate-900 text-xs font-mono font-semibold text-amber-300 border border-slate-700/80 shadow-sm"
+                            className="px-3 py-1 rounded-lg bg-slate-900 text-xs font-mono font-bold text-amber-400 shadow-xs"
                           >
                             {t}
                           </span>
@@ -197,31 +190,31 @@ export default function Projects() {
                   </div>
 
                   {/* Metrics Highlight Card (Right 5 Cols) */}
-                  <div className="lg:col-span-5 flex flex-col justify-between bg-slate-900/70 p-6 sm:p-8 rounded-2xl border border-slate-800 space-y-6">
+                  <div className="lg:col-span-5 flex flex-col justify-between bg-slate-900 text-white p-6 sm:p-8 rounded-2xl border-2 border-slate-900 space-y-6 shadow-xl">
                     
                     <div>
-                      <div className="flex items-center gap-2 text-amber-400 font-bold text-sm mb-4">
+                      <div className="flex items-center gap-2 text-amber-400 font-extrabold text-sm mb-4 font-mono">
                         <BarChart3 className="w-4 h-4" />
-                        <span>Caractéristiques Clés</span>
+                        <span>CARACTÉRISTIQUES CLÉS</span>
                       </div>
 
                       <div className="space-y-4">
                         {proj.highlights.map((hl, hIdx) => (
                           <div key={hIdx} className="flex items-center justify-between border-b border-slate-800 pb-3">
-                            <span className="text-xs text-slate-400">{hl.label}</span>
-                            <span className="text-sm font-bold font-mono text-white">{hl.value}</span>
+                            <span className="text-xs text-slate-400 font-semibold">{hl.label}</span>
+                            <span className="text-sm font-bold font-mono text-amber-300">{hl.value}</span>
                           </div>
                         ))}
                       </div>
                     </div>
 
-                    <div className="p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-emerald-500/10 border border-amber-500/20 text-xs text-slate-300 space-y-2">
-                      <div className="font-bold text-amber-400 flex items-center gap-1.5">
+                    <div className="p-4 rounded-xl bg-slate-800 border border-slate-700 text-xs text-slate-300 space-y-2">
+                      <div className="font-bold text-emerald-400 flex items-center gap-1.5 font-mono">
                         <Compass className="w-4 h-4" />
-                        <span>Méthodologie Appliquée</span>
+                        <span>MÉTHODOLOGIE APPLIQUÉE</span>
                       </div>
                       <p className="leading-relaxed text-slate-300">
-                        Conforme aux exigences d'ingénierie IFMEREE : respect du facteur de forme, calcul des pertes ombrages et sélection optimale des onduleurs.
+                        Conforme aux exigences d&apos;ingénierie IFMEREE : respect du facteur de forme, calcul des pertes ombrages et sélection optimale des onduleurs.
                       </p>
                     </div>
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
-import { Sun, Zap, Menu, X, Phone, FileText, Sparkles, Download } from "lucide-react";
+import { Sun, Zap, Menu, X, FileText, Download } from "lucide-react";
 import Link from "next/link";
 
 export default function Navbar() {
@@ -51,14 +51,14 @@ export default function Navbar() {
     <>
       {/* Scroll Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-amber-500 via-emerald-400 to-blue-500 z-[60] origin-left"
+        className="fixed top-0 left-0 right-0 h-[3px] bg-amber-500 z-[60] origin-left"
         style={{ scaleX }}
       />
 
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-slate-950/80 backdrop-blur-2xl border-b border-slate-800/60 py-3 shadow-2xl shadow-slate-950/60"
+            ? "bg-white/90 backdrop-blur-xl border-b-2 border-slate-900 py-3 shadow-md"
             : "bg-transparent py-5"
         }`}
       >
@@ -69,40 +69,37 @@ export default function Navbar() {
             <motion.div
               whileHover={{ rotate: 180, scale: 1.1 }}
               transition={{ duration: 0.5, type: "spring", stiffness: 200 }}
-              className="relative flex items-center justify-center w-10 h-10 rounded-xl shadow-lg shadow-amber-500/25"
+              className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-amber-300 border-2 border-slate-900 shadow-md"
             >
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-tr from-amber-500 to-emerald-400 animate-sun-rays opacity-70" />
-              <div className="relative w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center border border-amber-500/30">
-                <Sun className="w-5 h-5 text-amber-400" />
-              </div>
+              <Sun className="w-6 h-6 text-slate-950" />
             </motion.div>
             <div className="flex flex-col">
-              <span className="font-heading text-base font-extrabold tracking-tight text-white group-hover:text-amber-400 transition-colors duration-300">
-                Mohamed <span className="text-gradient-amber">MEREHOUM</span>
+              <span className="font-bebas text-xl font-black tracking-wide text-slate-900 group-hover:text-amber-600 transition-colors">
+                MOHAMED <span className="text-amber-500">MEREHOUM</span>
               </span>
-              <span className="text-[10px] text-slate-500 flex items-center gap-1 font-mono-code">
-                <Zap className="w-2.5 h-2.5 text-emerald-400" />
+              <span className="text-[10px] text-slate-600 font-mono font-bold flex items-center gap-1">
+                <Zap className="w-2.5 h-2.5 text-amber-500" />
                 Systèmes Énergie Solaire
               </span>
             </div>
           </a>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center space-x-0.5 bg-slate-900/50 p-1.5 rounded-2xl border border-slate-800/60 backdrop-blur-md">
+          <nav className="hidden md:flex items-center space-x-1 bg-white/90 p-1.5 rounded-2xl border-2 border-slate-900 shadow-md backdrop-blur-md">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
                 <a
                   key={link.name}
                   href={link.href}
-                  className={`relative px-4 py-1.5 text-xs font-semibold rounded-xl transition-all duration-300 ${
-                    isActive ? "text-slate-950" : "text-slate-400 hover:text-white"
+                  className={`relative px-4 py-1.5 text-xs font-bold font-heading rounded-xl transition-all duration-200 ${
+                    isActive ? "text-slate-950" : "text-slate-700 hover:text-slate-950"
                   }`}
                 >
                   {isActive && (
                     <motion.span
                       layoutId="activeNavTab"
-                      className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-500 rounded-xl shadow-md shadow-amber-500/30"
+                      className="absolute inset-0 bg-amber-300 rounded-xl border border-amber-400 shadow-xs"
                       transition={{ type: "spring", stiffness: 400, damping: 30 }}
                     />
                   )}
@@ -116,17 +113,17 @@ export default function Navbar() {
           <div className="hidden md:flex items-center space-x-2.5">
             <Link
               href="/cv"
-              className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-semibold rounded-xl bg-slate-900/70 hover:bg-slate-800 text-slate-300 border border-slate-700/60 transition-all hover:border-slate-600 shadow-md"
+              className="flex items-center gap-1.5 px-3.5 py-2 text-xs font-bold rounded-xl bg-white text-slate-900 border-2 border-slate-900 shadow-sm hover:bg-slate-100 transition-all"
             >
-              <FileText className="w-3.5 h-3.5 text-amber-400" />
+              <FileText className="w-3.5 h-3.5 text-amber-600" />
               <span>Voir CV</span>
             </Link>
             <motion.a
               href="/cv_mohamed_merehoum.pdf"
               download
-              whileHover={{ scale: 1.04, y: -1 }}
+              whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.97 }}
-              className="group flex items-center gap-2 px-4 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 text-slate-950 shadow-lg shadow-amber-500/25 transition-all shine-hover"
+              className="flex items-center gap-2 px-4 py-2 text-xs font-extrabold rounded-xl bg-amber-500 text-slate-950 border border-amber-400 shadow-md"
             >
               <Download className="w-3.5 h-3.5" />
               <span>Télécharger PDF</span>
@@ -136,7 +133,7 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <motion.button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-900 focus:outline-none border border-slate-800 transition-all"
+            className="md:hidden p-2.5 rounded-xl bg-white text-slate-900 border-2 border-slate-900 shadow-sm"
             aria-label="Toggle Navigation"
             whileTap={{ scale: 0.9 }}
           >
@@ -162,7 +159,7 @@ export default function Navbar() {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="md:hidden bg-slate-950/95 backdrop-blur-2xl border-b border-slate-800/60 px-4 pt-4 pb-6 overflow-hidden"
+              className="md:hidden bg-white border-b-2 border-slate-900 px-4 pt-4 pb-6 overflow-hidden shadow-xl"
             >
               <div className="space-y-1 mb-4">
                 {navLinks.map((link, i) => (
@@ -173,41 +170,36 @@ export default function Navbar() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: i * 0.05 }}
-                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all ${
+                    className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-bold transition-all ${
                       activeSection === link.id
-                        ? "bg-amber-500/10 text-amber-400 border border-amber-500/20"
-                        : "text-slate-300 hover:text-white hover:bg-slate-900"
+                        ? "bg-amber-300 text-slate-950 border border-amber-400"
+                        : "text-slate-800 hover:bg-slate-100"
                     }`}
                   >
-                    <span className={`w-1.5 h-1.5 rounded-full ${activeSection === link.id ? "bg-amber-400" : "bg-slate-700"}`} />
+                    <span className={`w-2 h-2 rounded-full ${activeSection === link.id ? "bg-slate-950" : "bg-slate-400"}`} />
                     {link.name}
                   </motion.a>
                 ))}
               </div>
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
-                className="pt-4 border-t border-slate-800/60 flex flex-col gap-2.5"
-              >
+              <div className="pt-4 border-t border-slate-200 flex flex-col gap-2.5">
                 <Link
                   href="/cv"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold rounded-xl bg-slate-900 text-slate-200 border border-slate-700"
+                  className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold rounded-xl bg-white text-slate-900 border-2 border-slate-900"
                 >
-                  <FileText className="w-4 h-4 text-amber-400" />
+                  <FileText className="w-4 h-4 text-amber-600" />
                   <span>Voir CV (Imprimable)</span>
                 </Link>
                 <a
                   href="/cv_mohamed_merehoum.pdf"
                   download
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-bold rounded-xl bg-gradient-to-r from-amber-500 to-amber-400 text-slate-950"
+                  className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-extrabold rounded-xl bg-amber-500 text-slate-950 border border-amber-400 shadow-md"
                 >
                   <Download className="w-4 h-4" />
                   <span>Télécharger CV PDF</span>
                 </a>
-              </motion.div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

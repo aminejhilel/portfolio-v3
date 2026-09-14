@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit, Plus_Jakarta_Sans, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Outfit, Plus_Jakarta_Sans, Space_Grotesk, JetBrains_Mono, Bebas_Neue, Caveat } from "next/font/google";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -31,6 +31,20 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500", "600"],
 });
 
+const bebasNeue = Bebas_Neue({
+  subsets: ["latin"],
+  variable: "--font-bebas",
+  display: "swap",
+  weight: ["400"],
+});
+
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-caveat",
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
+
 export const metadata: Metadata = {
   title: "Mohamed MEREHOUM | Technicien Spécialisé en Systèmes Énergie Solaire",
   description:
@@ -56,9 +70,9 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${outfit.variable} ${jakarta.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} scroll-smooth font-body`}
+      className={`${outfit.variable} ${jakarta.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${bebasNeue.variable} ${caveat.variable} scroll-smooth font-body`}
     >
-      <body className="bg-[#020817] text-slate-100 antialiased selection:bg-amber-500/30 selection:text-amber-100 min-h-screen flex flex-col overflow-x-hidden">
+      <body className="bg-[#f7f9fc] text-slate-900 antialiased selection:bg-amber-400/40 selection:text-slate-950 min-h-screen flex flex-col overflow-x-hidden paper-canvas">
         {children}
       </body>
     </html>

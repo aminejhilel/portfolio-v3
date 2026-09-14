@@ -1,385 +1,257 @@
 "use client";
 
-import { motion, Variants, useMotionValue, useTransform, animate } from "framer-motion";
-import { Sun, Zap, MapPin, ArrowRight, Download, CheckCircle2, ShieldCheck, Compass, Sparkles } from "lucide-react";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { 
+  Sun, Zap, MapPin, ArrowRight, Download, CheckCircle2, 
+  ShieldCheck, Compass, Sparkles, Pencil, Heart, Eye, Layers, FileText
+} from "lucide-react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 /* ─── Animated Counter ──────────────────────────── */
-function Counter({ to, suffix = "" }: { to: number; suffix?: string }) {
+function Counter({ to, suffix = "", decimals = 0 }: { to: number; suffix?: string; decimals?: number }) {
   const count = useMotionValue(0);
-  const rounded = useTransform(count, (v) => Math.round(v));
   const [display, setDisplay] = useState("0");
 
   useEffect(() => {
-    const controls = animate(count, to, { duration: 2, ease: "easeOut", delay: 0.5 });
-    const unsub = rounded.on("change", (v) => setDisplay(String(v)));
+    const controls = animate(count, to, { duration: 2, ease: "easeOut", delay: 0.3 });
+    const unsub = count.on("change", (v) => {
+      setDisplay(v.toFixed(decimals));
+    });
     return () => { controls.stop(); unsub(); };
-  }, [count, rounded, to]);
+  }, [count, to, decimals]);
 
   return (
-    <span className="font-heading font-black tabular-nums">
+    <span className="font-bebas text-3xl tracking-wide tabular-nums">
       {display}{suffix}
     </span>
   );
 }
 
-/* ─── Floating Particle ─────────────────────────── */
-function Particle({ x, y, delay, size, color }: { x: string; y: string; delay: number; size: number; color: string }) {
-  return (
-    <motion.div
-      className="absolute rounded-full pointer-events-none"
-      style={{ left: x, top: y, width: size, height: size, backgroundColor: color }}
-      animate={{
-        y: [0, -30, 0],
-        opacity: [0, 0.7, 0],
-        scale: [0.5, 1, 0.5],
-      }}
-      transition={{
-        duration: 4 + Math.random() * 3,
-        repeat: Infinity,
-        delay,
-        ease: "easeInOut",
-      }}
-    />
-  );
-}
-
-/* ─── Typing Effect ─────────────────────────────── */
-function TypingText({ texts }: { texts: string[] }) {
-  const [currentText, setCurrentText] = useState("");
-  const [textIndex, setTextIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-
-  useEffect(() => {
-    if (isPaused) return;
-    const target = texts[textIndex];
-    const timeout = setTimeout(() => {
-      if (!isDeleting) {
-        if (currentText.length < target.length) {
-          setCurrentText(target.slice(0, currentText.length + 1));
-        } else {
-          setIsPaused(true);
-          setTimeout(() => { setIsPaused(false); setIsDeleting(true); }, 2000);
-        }
-      } else {
-        if (currentText.length > 0) {
-          setCurrentText(currentText.slice(0, -1));
-        } else {
-          setIsDeleting(false);
-          setTextIndex((i) => (i + 1) % texts.length);
-        }
-      }
-    }, isDeleting ? 45 : 85);
-    return () => clearTimeout(timeout);
-  }, [currentText, isDeleting, textIndex, texts, isPaused]);
-
-  return (
-    <span className="text-gradient-amber">
-      {currentText}
-      <motion.span
-        animate={{ opacity: [1, 0, 1] }}
-        transition={{ duration: 0.8, repeat: Infinity }}
-        className="inline-block w-0.5 h-[1em] bg-amber-400 ml-1 align-middle"
-      />
-    </span>
-  );
-}
-
-/* ─── Main Hero Component ───────────────────────── */
 export default function Hero() {
-  const particles = useRef(
-    Array.from({ length: 20 }, (_, i) => ({
-      id: i,
-      x: `${Math.random() * 100}%`,
-      y: `${Math.random() * 100}%`,
-      delay: Math.random() * 5,
-      size: 2 + Math.random() * 4,
-      color: i % 3 === 0 ? "rgba(245,158,11,0.6)" : i % 3 === 1 ? "rgba(16,185,129,0.5)" : "rgba(59,130,246,0.4)",
-    }))
-  ).current;
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.12, delayChildren: 0.1 },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
-  };
-
-  const stats = [
-    { value: 1.4, suffix: " MW", label: "Centrale LEAR Meknès", color: "text-amber-400" },
-    { value: 711, suffix: " kW", label: "Heirchmane Kénitra", color: "text-emerald-400" },
-    { value: 170, suffix: " m²", label: "Toiture IFMEREE", color: "text-blue-400" },
-  ];
-
   return (
-    <section id="hero" className="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden">
-      {/* Animated gradient background */}
-      <div className="absolute inset-0 bg-[#020817]" />
-      <div className="absolute inset-0 bg-radial-solar" />
-      <div className="absolute inset-0 bg-solar-grid opacity-60" />
+    <section id="hero" className="relative min-h-[92vh] flex items-center pt-28 pb-20 overflow-hidden paper-canvas text-slate-900 border-b border-slate-200">
+      
 
-      {/* Glowing orbs */}
-      <motion.div
-        className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] bg-amber-500/8 rounded-full blur-3xl pointer-events-none"
-        animate={{ scale: [1, 1.1, 1], opacity: [0.15, 0.25, 0.15] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute top-2/3 right-0 w-[600px] h-[600px] bg-emerald-500/8 rounded-full blur-3xl pointer-events-none"
-        animate={{ scale: [1, 1.15, 1], opacity: [0.1, 0.2, 0.1] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-      />
-      <motion.div
-        className="absolute bottom-0 left-10 w-[400px] h-[400px] bg-blue-500/6 rounded-full blur-3xl pointer-events-none"
-        animate={{ scale: [1, 1.2, 1], opacity: [0.08, 0.15, 0.08] }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-      />
 
-      {/* Floating particles */}
-      {particles.map((p) => (
-        <Particle key={p.id} x={p.x} y={p.y} delay={p.delay} size={p.size} color={p.color} />
-      ))}
+      {/* ─── 2. SVG HAND-DRAWN SKETCH CONNECTORS ─── */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0 stroke-slate-400/60" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="sketchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#f59e0b" stopOpacity="0.7" />
+            <stop offset="50%" stopColor="#10b981" stopOpacity="0.7" />
+            <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.7" />
+          </linearGradient>
+        </defs>
 
-      {/* Animated sun decoration top-right */}
-      <div className="absolute top-16 right-8 md:right-16 opacity-10 pointer-events-none">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-          className="w-32 h-32 border-2 border-dashed border-amber-400 rounded-full"
+        <motion.path
+          d="M 120 180 Q 280 100 450 160 T 780 120"
+          fill="none"
+          stroke="url(#sketchGrad)"
+          strokeWidth="2.5"
+          strokeDasharray="6 6"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2, ease: "easeInOut" }}
         />
-        <motion.div
-          animate={{ rotate: -360 }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-4 border border-amber-300 rounded-full"
+
+        <motion.path
+          d="M 200 450 Q 500 560 850 480"
+          fill="none"
+          stroke="#94a3b8"
+          strokeWidth="2"
+          strokeDasharray="4 4"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2.2, delay: 0.3 }}
         />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <Sun className="w-8 h-8 text-amber-400" />
+      </svg>
+
+      {/* ─── 3. INTERACTIVE SKETCH STICKERS & BADGES ─── */}
+      {/* Sticker 1: PVsyst */}
+      <motion.div
+        drag
+        dragConstraints={{ left: -30, right: 30, top: -30, bottom: 30 }}
+        whileHover={{ scale: 1.1, rotate: -6 }}
+        className="hidden lg:flex absolute top-28 left-12 z-20 cursor-grab active:cursor-grabbing"
+      >
+        <div className="relative bg-amber-300 text-slate-950 font-bold px-4 py-2 rounded-md shadow-lg transform -rotate-3 border border-amber-400 flex items-center gap-2">
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-12 h-4 bg-amber-100/80 border-x border-amber-300/60 rotate-2 shadow-sm" />
+          <Sun className="w-4 h-4 text-amber-900" />
+          <span className="font-bebas tracking-wide text-lg">PVSYST 7.4</span>
+          <span className="text-[10px] font-mono bg-amber-400/60 px-1.5 py-0.5 rounded text-amber-950">SOLAR</span>
         </div>
+      </motion.div>
+
+      {/* Sticker 2: AutoCAD 2D/3D */}
+      <motion.div
+        drag
+        dragConstraints={{ left: -30, right: 30, top: -30, bottom: 30 }}
+        whileHover={{ scale: 1.1, rotate: 6 }}
+        className="hidden lg:flex absolute top-28 right-16 z-20 cursor-grab active:cursor-grabbing"
+      >
+        <div className="relative bg-emerald-300 text-slate-950 font-bold px-4 py-2 rounded-md shadow-lg transform rotate-3 border border-emerald-400 flex items-center gap-2">
+          <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-14 h-4 bg-emerald-100/80 border-x border-emerald-300/60 -rotate-2 shadow-sm" />
+          <Layers className="w-4 h-4 text-emerald-950" />
+          <span className="font-bebas tracking-wide text-lg">AUTOCAD 2D/3D</span>
+        </div>
+      </motion.div>
+
+      {/* Sticker 3: Handwritten note "PFE 2026 LEAR" */}
+      <motion.div
+        drag
+        dragConstraints={{ left: -20, right: 20, top: -20, bottom: 20 }}
+        whileHover={{ scale: 1.08 }}
+        className="hidden sm:flex absolute bottom-20 left-10 z-20 cursor-grab active:cursor-grabbing"
+      >
+        <div className="relative bg-white text-slate-900 px-4 py-3 rounded-lg shadow-xl border border-slate-200 transform -rotate-6 font-caveat text-xl font-bold flex flex-col items-center">
+          <div className="absolute -top-3 left-6 w-10 h-4 bg-yellow-200/90 rotate-6 shadow-xs border-x border-yellow-300" />
+          <div className="flex items-center gap-1.5 text-amber-600">
+            <Sparkles className="w-4 h-4" />
+            <span>Stage PFE · LEAR Meknès</span>
+          </div>
+          <span className="text-sm text-slate-600 font-sans font-semibold">1.4 MW Centrale Solaire</span>
+        </div>
+      </motion.div>
+
+      {/* Sticker 4: Sketch Pencil Badge */}
+      <motion.div 
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        className="hidden md:flex absolute bottom-20 right-12 z-20 items-center gap-2 bg-slate-900 text-white px-4 py-2.5 rounded-full shadow-2xl border border-slate-700"
+      >
+        <div className="p-1.5 bg-amber-500 rounded-full text-slate-950">
+          <Pencil className="w-4 h-4" />
+        </div>
+        <div>
+          <span className="font-bebas text-base tracking-wider text-amber-400 block leading-tight">DIMENSIONNEMENT PV</span>
+          <span className="text-[10px] text-slate-300 font-mono">DC / AC & Schémas</span>
+        </div>
+      </motion.div>
+
+      {/* Social Engagement Counters */}
+      <div className="hidden lg:flex absolute top-1/2 right-6 -translate-y-1/2 flex-col gap-4 z-20">
+        <motion.div 
+          whileHover={{ scale: 1.15 }}
+          className="flex flex-col items-center p-2.5 bg-white shadow-xl rounded-2xl border border-slate-200 text-slate-800"
+        >
+          <Heart className="w-5 h-5 text-rose-500 fill-rose-500" />
+          <span className="font-bebas text-sm mt-0.5 text-slate-900">15.2K</span>
+        </motion.div>
+
+        <motion.div 
+          whileHover={{ scale: 1.15 }}
+          className="flex flex-col items-center p-2.5 bg-white shadow-xl rounded-2xl border border-slate-200 text-slate-800"
+        >
+          <Eye className="w-5 h-5 text-blue-500" />
+          <span className="font-bebas text-sm mt-0.5 text-slate-900">6.1K</span>
+        </motion.div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-col lg:flex-row items-center justify-between gap-14"
+      {/* ─── 4. MAIN HERO CONTENT (CENTERED / FULL WIDTH NO PROFILE CARD) ─── */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="space-y-7 flex flex-col items-center"
         >
-          {/* ─── Left Column ─── */}
-          <div className="flex-1 text-center lg:text-left space-y-7 max-w-2xl">
+          {/* Stage Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900 text-white text-xs font-semibold shadow-xl border border-slate-800">
+            <span className="flex h-2.5 w-2.5 relative">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+            </span>
+            <span className="font-mono text-amber-400 font-bold">IFMEREE OUJDA</span>
+            <span className="text-slate-500">•</span>
+            <span>Technicien Spécialisé Promo 2024–2026</span>
+          </div>
 
-            {/* Stage Badge */}
-            <motion.div variants={itemVariants}>
-              <motion.div
-                className="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-emerald-950/60 border border-emerald-500/40 text-emerald-300 text-xs font-semibold shadow-lg shadow-emerald-950/50 backdrop-blur-sm"
-                animate={{ boxShadow: ["0 0 0 0 rgba(16,185,129,0.4)", "0 0 0 8px rgba(16,185,129,0)", "0 0 0 0 rgba(16,185,129,0.4)"] }}
-                transition={{ duration: 2.5, repeat: Infinity }}
+          {/* Main Title */}
+          <div className="space-y-2">
+            <span className="font-caveat text-4xl sm:text-5xl text-amber-600 font-bold block transform -rotate-1">
+              Hey, Je suis 👋
+            </span>
+            <h1 className="font-bebas text-7xl sm:text-8xl lg:text-9xl font-black text-slate-900 tracking-tight leading-[0.88] drop-shadow-sm">
+              MOHAMED <span className="text-amber-500 underline decoration-amber-400/50 decoration-wavy decoration-3">MEREHOUM</span>
+            </h1>
+          </div>
+
+
+
+          {/* Key Skill Chips */}
+          <div className="flex flex-wrap items-center justify-center gap-2.5 pt-1">
+            {[
+              { icon: MapPin, text: "Oujda, Maroc", color: "bg-amber-100 text-amber-900 border-amber-300" },
+              { icon: Compass, text: "Mobilité Nationale", color: "bg-emerald-100 text-emerald-900 border-emerald-300" },
+              { icon: ShieldCheck, text: "Permis B", color: "bg-sky-100 text-sky-900 border-sky-300" },
+            ].map(({ icon: Icon, text, color }) => (
+              <span key={text} className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border text-xs font-bold shadow-xs ${color}`}>
+                <Icon className="w-4 h-4" />
+                {text}
+              </span>
+            ))}
+          </div>
+
+          {/* Key Stats Chips Bar (1.4 MW, 711 kW, 170 m²) */}
+          <div className="grid grid-cols-3 gap-4 max-w-xl w-full pt-4">
+            <div className="p-4 rounded-2xl bg-white border-2 border-slate-900 shadow-md text-center">
+              <div className="text-slate-900">
+                <Counter to={1.4} suffix=" MW" decimals={1} />
+              </div>
+              <div className="text-xs text-amber-600 font-extrabold uppercase font-mono mt-0.5">LEAR Meknès</div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white border-2 border-slate-900 shadow-md text-center">
+              <div className="text-slate-900">
+                <Counter to={711} suffix=" kW" decimals={0} />
+              </div>
+              <div className="text-xs text-emerald-600 font-extrabold uppercase font-mono mt-0.5">Heirchmane Kénitra</div>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-white border-2 border-slate-900 shadow-md text-center">
+              <div className="text-slate-900">
+                <Counter to={170} suffix=" m²" decimals={0} />
+              </div>
+              <div className="text-xs text-sky-600 font-extrabold uppercase font-mono mt-0.5">Toiture IFMEREE</div>
+            </div>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4 w-full sm:w-auto">
+            <motion.a
+              href="#projects"
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.96 }}
+              className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-9 py-4 rounded-2xl bg-amber-500 text-slate-950 font-extrabold text-base shadow-xl shadow-amber-500/25 hover:bg-amber-400 transition-all border border-amber-400"
+            >
+              <Sparkles className="w-5 h-5" />
+              <span>Explorer mes Projets</span>
+              <ArrowRight className="w-5 h-5" />
+            </motion.a>
+
+            <motion.a
+              href="/cv_mohamed_merehoum.pdf"
+              download
+              whileHover={{ scale: 1.04, y: -2 }}
+              whileTap={{ scale: 0.96 }}
+              className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-7 py-4 rounded-2xl bg-white text-slate-900 font-bold text-base border-2 border-slate-900 hover:bg-slate-900 hover:text-white transition-all shadow-lg"
+            >
+              <Download className="w-5 h-5 text-amber-500" />
+              <span>Télécharger CV</span>
+            </motion.a>
+
+            <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.96 }}>
+              <Link
+                href="/cv"
+                className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-4 rounded-2xl bg-slate-100 text-slate-900 font-bold text-base border border-slate-300 shadow-sm"
               >
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                </span>
-                <span>Stage PFE — Energy Pro Tech · Mars–Juin 2026</span>
-              </motion.div>
-            </motion.div>
-
-            {/* Main Headline */}
-            <motion.div variants={itemVariants} className="space-y-2">
-              <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white leading-[0.95]">
-                Mohamed
-                <br />
-                <TypingText texts={["MEREHOUM", "Énergie Solaire", "MEREHOUM"]} />
-              </h1>
-            </motion.div>
-
-            {/* Specialty Subtitle */}
-            <motion.div variants={itemVariants}>
-              <h2 className="font-heading text-lg sm:text-xl font-semibold text-slate-300 flex items-center justify-center lg:justify-start gap-3">
-                <div className="flex items-center justify-center p-2 rounded-xl bg-amber-500/10 border border-amber-500/20">
-                  <Zap className="w-5 h-5 text-amber-400 shrink-0" />
-                </div>
-                <span>Technicien Spécialisé en <span className="text-amber-400">Systèmes Énergie Solaire</span></span>
-              </h2>
-            </motion.div>
-
-            {/* Bio */}
-            <motion.p variants={itemVariants} className="text-slate-400 text-base sm:text-lg max-w-xl leading-relaxed font-body">
-              Diplômé de l&apos;<strong className="text-slate-200">IFMEREE d&apos;Oujda</strong>, passionné d&apos;énergies renouvelables avec une expérience terrain concrète en{" "}
-              <strong className="text-amber-400">dimensionnement PVsyst</strong>, modélisation{" "}
-              <strong className="text-emerald-400">AutoCAD/SketchUp</strong> et installation DC/AC.
-            </motion.p>
-
-            {/* Chips */}
-            <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
-              {[
-                { icon: MapPin, text: "Oujda, Maroc", color: "text-amber-400" },
-                { icon: Compass, text: "Mobilité Nationale", color: "text-emerald-400" },
-                { icon: ShieldCheck, text: "Permis B", color: "text-blue-400" },
-              ].map(({ icon: Icon, text, color }) => (
-                <span key={text} className="flex items-center gap-1.5 bg-slate-900/70 backdrop-blur-sm px-3.5 py-1.5 rounded-xl border border-slate-800/80 text-xs font-medium text-slate-300 shadow-md">
-                  <Icon className={`w-3.5 h-3.5 ${color}`} />
-                  {text}
-                </span>
-              ))}
-            </motion.div>
-
-            {/* CTA Buttons */}
-            <motion.div variants={itemVariants} className="pt-2 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-              <motion.a
-                href="#projects"
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-8 py-4 rounded-2xl bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 text-slate-950 font-bold text-sm shadow-xl shadow-amber-500/30 btn-glow shine-hover"
-              >
-                <span>Explorer mes Projets</span>
-                <ArrowRight className="w-4 h-4" />
-              </motion.a>
-
-              <motion.a
-                href="/cv_mohamed_merehoum.pdf"
-                download
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.97 }}
-                className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-6 py-4 rounded-2xl bg-slate-900/80 backdrop-blur-sm text-slate-200 font-semibold text-sm border border-slate-700/80 hover:border-amber-500/50 transition-all shadow-lg"
-              >
-                <Download className="w-4 h-4 text-amber-400" />
-                <span>Télécharger CV</span>
-              </motion.a>
-
-              <motion.div whileHover={{ scale: 1.04, y: -2 }} whileTap={{ scale: 0.97 }}>
-                <Link
-                  href="/cv"
-                  className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-4 rounded-2xl bg-slate-900/60 backdrop-blur-sm text-slate-300 font-medium text-sm border border-slate-800"
-                >
-                  <Sparkles className="w-4 h-4 text-emerald-400" />
-                  <span>Version Web CV</span>
-                </Link>
-              </motion.div>
+                <FileText className="w-5 h-5 text-emerald-600" />
+                <span>Version Web CV</span>
+              </Link>
             </motion.div>
           </div>
 
-          {/* ─── Right Column: Profile Card ─── */}
-          <motion.div variants={itemVariants} className="flex-1 w-full max-w-md lg:max-w-none">
-            <motion.div
-              whileHover={{ y: -6 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="relative glass-card solar-glow-card rounded-3xl p-7 sm:p-8 border border-slate-800/60 shadow-2xl space-y-6"
-            >
-              {/* Gradient border effect */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-amber-500/10 via-transparent to-emerald-500/5 pointer-events-none" />
-
-              {/* Profile Header */}
-              <div className="flex items-center justify-between border-b border-slate-800/80 pb-5 relative z-10">
-                <div className="flex items-center gap-4">
-                  <motion.div
-                    className="relative shrink-0"
-                    animate={{ y: [0, -5, 0] }}
-                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  >
-                    <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-amber-500/50 shadow-xl shadow-amber-500/20">
-                      <img
-                        src="/cremti.jpeg"
-                        alt="Mohamed MEREHOUM"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full border-2 border-slate-950 flex items-center justify-center">
-                      <span className="w-2 h-2 rounded-full bg-white" />
-                    </div>
-                  </motion.div>
-                  <div>
-                    <h3 className="font-heading text-base font-extrabold text-white leading-tight">Mohamed MEREHOUM</h3>
-                    <p className="text-xs text-amber-400 font-medium flex items-center gap-1 mt-0.5">
-                      <Sun className="w-3 h-3" /> Systèmes Énergie Solaire
-                    </p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <span className="text-[10px] font-mono px-2.5 py-1 rounded-lg bg-emerald-500/10 text-emerald-300 font-semibold border border-emerald-500/25 block">
-                    IFMEREE
-                  </span>
-                  <span className="text-[10px] text-slate-500 mt-1 block">2024–2026</span>
-                </div>
-              </div>
-
-              {/* Stats Grid */}
-              <div className="grid grid-cols-3 gap-3 relative z-10">
-                {stats.map((stat, i) => (
-                  <motion.div
-                    key={i}
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    className="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800/80 text-center shadow-md"
-                  >
-                    <div className={`text-xl font-heading font-black ${stat.color} leading-none`}>
-                      <Counter to={stat.value} suffix={stat.suffix} />
-                    </div>
-                    <div className="text-[10px] text-slate-500 mt-1.5 font-medium leading-tight">{stat.label}</div>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Tools section */}
-              <div className="pt-1 relative z-10">
-                <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-3">
-                  Logiciels & Outils
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {["PVsyst", "PVSol", "AutoCAD 2D", "SketchUp 3D", "Gantt Pro", "Excel"].map((tool) => (
-                    <motion.span
-                      key={tool}
-                      whileHover={{ scale: 1.08, y: -1 }}
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-900/80 text-xs font-mono font-medium text-slate-300 border border-slate-700/60 shadow-sm"
-                    >
-                      <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                      {tool}
-                    </motion.span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Bottom tagline */}
-              <div className="relative z-10 pt-1 border-t border-slate-800/60 flex items-center justify-between">
-                <span className="text-xs text-slate-500 font-mono">Formation · Stage PFE · Projets</span>
-                <motion.div
-                  className="flex items-center gap-1.5 text-xs font-semibold text-amber-400"
-                  animate={{ opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                  <span>Disponible</span>
-                </motion.div>
-              </div>
-            </motion.div>
-          </motion.div>
-
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-        >
-          <span className="text-[10px] text-slate-600 font-mono tracking-widest uppercase">Défiler</span>
-          <motion.div
-            className="w-5 h-8 rounded-full border border-slate-800 flex items-start justify-center pt-1.5"
-            animate={{ opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            <motion.div
-              className="w-1 h-2 rounded-full bg-amber-400"
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            />
-          </motion.div>
         </motion.div>
       </div>
     </section>

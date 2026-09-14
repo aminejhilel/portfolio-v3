@@ -61,7 +61,7 @@ export default function Experience() {
   ];
 
   return (
-    <section id="experience" className="py-24 bg-[#020817] relative border-t border-slate-900/80 overflow-hidden">
+    <section id="experience" className="py-24 paper-canvas relative border-t border-slate-200 overflow-hidden text-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Title */}
@@ -72,15 +72,15 @@ export default function Experience() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16 space-y-3"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold">
-            <Briefcase className="w-3.5 h-3.5" />
-            <span>Parcours & Qualifications</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 text-amber-400 text-xs font-mono font-bold shadow-md">
+            <Briefcase className="w-4 h-4" />
+            <span>PARCOURS & QUALIFICATIONS</span>
           </div>
-          <h2 className="font-display text-4xl sm:text-5xl font-black text-white tracking-tight">
-            Expériences & Formations
+          <h2 className="font-bebas text-5xl sm:text-6xl font-black text-slate-900 tracking-tight">
+            EXPÉRIENCES & <span className="text-amber-500 underline decoration-amber-400 decoration-wavy decoration-2">FORMATIONS</span>
           </h2>
-          <p className="text-slate-400 text-sm sm:text-base">
-            Mon cursus à l'IFMEREE d'Oujda et mes réalisations de terrain lors de mes stages.
+          <p className="text-slate-700 text-base sm:text-lg leading-relaxed font-body">
+            Mon cursus à l&apos;IFMEREE d&apos;Oujda et mes réalisations de terrain lors de mes stages.
           </p>
         </motion.div>
 
@@ -89,13 +89,13 @@ export default function Experience() {
           {/* Left Column: Expériences Professionnelles */}
           <div className="space-y-6">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              <div className="p-3 rounded-2xl bg-amber-300 text-slate-950 border-2 border-slate-900 shadow-md">
                 <Briefcase className="w-6 h-6" />
               </div>
-              <h3 className="font-heading text-2xl font-bold text-white">Expériences Professionnelles</h3>
+              <h3 className="font-bebas text-3xl font-black text-slate-900 tracking-wide">Expériences Professionnelles</h3>
             </div>
 
-            <div className="space-y-6 relative before:absolute before:inset-0 before:left-4 before:w-0.5 before:bg-slate-800">
+            <div className="space-y-6 relative before:absolute before:inset-0 before:left-4 before:w-0.5 before:bg-slate-300">
               {experiences.map((exp, idx) => (
                 <motion.div
                   key={idx}
@@ -105,38 +105,37 @@ export default function Experience() {
                   transition={{ duration: 0.5, delay: 0.1 * idx }}
                   className="relative pl-10 group"
                 >
-                  {/* Timeline bullet node */}
-                  <div className="absolute left-2.5 top-1.5 -translate-x-1/2 w-4 h-4 rounded-full bg-slate-950 border-2 border-amber-500 group-hover:scale-125 transition-transform" />
+                  <div className="absolute left-2.5 top-2 -translate-x-1/2 w-4 h-4 rounded-full bg-amber-400 border-2 border-slate-900 shadow-sm" />
                   
-                  <div className="glass-card glass-card-hover rounded-2xl p-6 border border-slate-800 space-y-3">
+                  <div className="bg-white rounded-2xl p-6 border-2 border-slate-900 shadow-lg space-y-3">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-300 border border-amber-500/20">
+                      <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-amber-100 text-amber-950 border border-amber-300">
                         {exp.type}
                       </span>
-                      <span className="flex items-center gap-1 text-xs text-slate-400 font-mono">
-                        <Calendar className="w-3.5 h-3.5 text-amber-400" />
+                      <span className="flex items-center gap-1 text-xs text-slate-600 font-mono font-bold">
+                        <Calendar className="w-3.5 h-3.5 text-amber-600" />
                         {exp.period}
                       </span>
                     </div>
 
                     <div>
-                      <h4 className="font-heading text-lg font-bold text-white group-hover:text-amber-400 transition-colors">
+                      <h4 className="font-heading text-xl font-extrabold text-slate-900">
                         {exp.role}
                       </h4>
-                      <p className="text-sm font-semibold text-emerald-400 flex items-center gap-1.5 mt-0.5">
+                      <p className="text-sm font-bold text-emerald-700 flex items-center gap-1.5 mt-0.5">
                         <span>{exp.company}</span>
-                        <span className="text-slate-600">•</span>
-                        <span className="flex items-center text-slate-400 text-xs font-normal">
+                        <span className="text-slate-400">•</span>
+                        <span className="flex items-center text-slate-600 text-xs font-semibold">
                           <MapPin className="w-3 h-3 text-slate-500 mr-0.5" />
                           {exp.location}
                         </span>
                       </p>
                     </div>
 
-                    <ul className="space-y-2 pt-2 border-t border-slate-800/80">
+                    <ul className="space-y-2 pt-2 border-t border-slate-200">
                       {exp.bullets.map((b, i) => (
-                        <li key={i} className="flex items-start gap-2 text-xs sm:text-sm text-slate-300">
-                          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                        <li key={i} className="flex items-start gap-2 text-sm text-slate-700 font-body">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                           <span>{b}</span>
                         </li>
                       ))}
@@ -150,13 +149,13 @@ export default function Experience() {
           {/* Right Column: Formations */}
           <div className="space-y-6">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <div className="p-3 rounded-2xl bg-emerald-300 text-slate-950 border-2 border-slate-900 shadow-md">
                 <GraduationCap className="w-6 h-6" />
               </div>
-              <h3 className="font-heading text-2xl font-bold text-white">Diplômes & Formations</h3>
+              <h3 className="font-bebas text-3xl font-black text-slate-900 tracking-wide">Diplômes & Formations</h3>
             </div>
 
-            <div className="space-y-6 relative before:absolute before:inset-0 before:left-4 before:w-0.5 before:bg-slate-800">
+            <div className="space-y-6 relative before:absolute before:inset-0 before:left-4 before:w-0.5 before:bg-slate-300">
               {education.map((edu, idx) => (
                 <motion.div
                   key={idx}
@@ -166,28 +165,27 @@ export default function Experience() {
                   transition={{ duration: 0.5, delay: 0.1 * idx }}
                   className="relative pl-10 group"
                 >
-                  {/* Timeline bullet node */}
-                  <div className="absolute left-2.5 top-1.5 -translate-x-1/2 w-4 h-4 rounded-full bg-slate-950 border-2 border-emerald-500 group-hover:scale-125 transition-transform" />
+                  <div className="absolute left-2.5 top-2 -translate-x-1/2 w-4 h-4 rounded-full bg-emerald-400 border-2 border-slate-900 shadow-sm" />
 
-                  <div className="glass-card glass-card-hover rounded-2xl p-6 border border-slate-800 space-y-3">
+                  <div className="bg-white rounded-2xl p-6 border-2 border-slate-900 shadow-lg space-y-3">
                     <div className="flex flex-wrap items-center justify-between gap-2">
-                      <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
+                      <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-950 border border-emerald-300">
                         {edu.status}
                       </span>
-                      <span className="flex items-center gap-1 text-xs text-slate-400 font-mono">
-                        <Calendar className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="flex items-center gap-1 text-xs text-slate-600 font-mono font-bold">
+                        <Calendar className="w-3.5 h-3.5 text-emerald-600" />
                         {edu.period}
                       </span>
                     </div>
 
                     <div>
-                      <h4 className="font-heading text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">
+                      <h4 className="font-heading text-xl font-extrabold text-slate-900">
                         {edu.degree}
                       </h4>
-                      <p className="text-sm font-medium text-slate-300 mt-0.5">
+                      <p className="text-sm font-bold text-slate-700 mt-0.5">
                         {edu.institution}
                       </p>
-                      <p className="text-xs text-slate-400 flex items-center gap-1 mt-1">
+                      <p className="text-xs font-semibold text-slate-500 flex items-center gap-1 mt-1">
                         <MapPin className="w-3 h-3 text-slate-500" /> {edu.location}
                       </p>
                     </div>
