@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sun, ArrowUp, Mail, Phone, MapPin, Code, X, ExternalLink } from "lucide-react";
+import { Sun, ArrowUp, Mail, Phone, MapPin, Code, X, ExternalLink, Zap } from "lucide-react";
 
 /* ─── Social SVG Icons ──────────────────────────── */
 function GithubIcon({ className = "w-4 h-4" }: { className?: string }) {
@@ -46,42 +46,71 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative paper-canvas border-t-2 border-slate-900 overflow-hidden text-slate-900">
+    <footer className="relative bg-slate-950 text-white overflow-hidden border-t-2 border-slate-800">
+      {/* Background dots */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px)",
+          backgroundSize: "24px 24px",
+        }}
+      />
+      {/* Ambient glow */}
+      <div className="absolute top-0 left-1/4 w-80 h-40 rounded-full bg-amber-500/5 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-64 h-40 rounded-full bg-emerald-500/5 blur-3xl pointer-events-none" />
+
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        {/* Top gradient line */}
+        <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-amber-500/50 to-transparent mb-12 mt-0" />
+
         {/* Main Footer Content */}
-        <div className="py-14 grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="pb-12 grid grid-cols-1 md:grid-cols-3 gap-10">
 
           {/* Brand Column */}
-          <div className="space-y-4">
+          <div className="space-y-5">
             <div className="flex items-center gap-3">
-              <div className="relative w-11 h-11 rounded-xl bg-amber-300 border-2 border-slate-900 flex items-center justify-center shadow-md">
+              <div className="relative w-11 h-11 rounded-xl bg-amber-400 border-2 border-amber-300 flex items-center justify-center shadow-[3px_3px_0px_rgba(245,158,11,0.3)]">
                 <Sun className="w-6 h-6 text-slate-950" />
               </div>
               <div>
-                <div className="font-bebas text-2xl font-black text-slate-900 tracking-wide">Mohamed MEREHOUM</div>
-                <div className="text-xs text-amber-700 font-mono font-bold">Systèmes Énergie Solaire</div>
+                <div className="font-bebas text-2xl font-black text-white tracking-wide">Mohamed MEREHOUM</div>
+                <div className="text-xs text-amber-400 font-mono font-bold flex items-center gap-1">
+                  <Zap className="w-3 h-3" />
+                  Systèmes Énergie Solaire
+                </div>
               </div>
             </div>
-            <p className="text-xs text-slate-700 leading-relaxed font-body">
+            <p className="text-xs text-slate-400 leading-relaxed font-body">
               Technicien Spécialisé en Systèmes Énergie Solaire, diplômé de l&apos;IFMEREE d&apos;Oujda. Expertise en PVsyst, AutoCAD, SketchUp et installation photovoltaïque.
             </p>
-            <div className="flex items-center gap-2 text-xs font-bold text-slate-800">
-              <MapPin className="w-3.5 h-3.5 text-amber-600" />
+            <div className="flex items-center gap-2 text-xs font-bold text-slate-400">
+              <MapPin className="w-3.5 h-3.5 text-amber-500" />
               <span>Oujda, Maroc · Mobilité Nationale</span>
+            </div>
+            {/* Availability */}
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-bold">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              </span>
+              Disponible
             </div>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h4 className="font-bebas text-xl font-black text-slate-900 tracking-wider">Navigation</h4>
+            <h4 className="font-bebas text-xl font-black text-white tracking-wider flex items-center gap-2">
+              <span className="w-6 h-0.5 bg-amber-400 inline-block" />
+              Navigation
+            </h4>
             <ul className="space-y-2 font-body font-bold text-xs">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-slate-700 hover:text-amber-600 transition-colors inline-flex items-center gap-2"
+                    className="text-slate-400 hover:text-amber-400 transition-colors inline-flex items-center gap-2 group"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-slate-900" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-700 group-hover:bg-amber-400 transition-colors" />
                     {link.name}
                   </a>
                 </li>
@@ -91,33 +120,36 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h4 className="font-bebas text-xl font-black text-slate-900 tracking-wider">Contact Direct</h4>
+            <h4 className="font-bebas text-xl font-black text-white tracking-wider flex items-center gap-2">
+              <span className="w-6 h-0.5 bg-amber-400 inline-block" />
+              Contact Direct
+            </h4>
             <div className="space-y-2.5">
               <a
                 href="mailto:mohamedmerehoum860@gmail.com"
-                className="flex items-center gap-2.5 text-xs font-bold text-slate-800 hover:text-amber-600 transition-colors"
+                className="flex items-center gap-2.5 text-xs font-bold text-slate-400 hover:text-amber-400 transition-colors"
               >
-                <div className="w-7 h-7 rounded-lg bg-amber-100 border border-amber-300 flex items-center justify-center text-slate-900">
+                <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
                   <Mail className="w-3.5 h-3.5" />
                 </div>
                 <span>mohamedmerehoum860@gmail.com</span>
               </a>
               <a
                 href="tel:0672992948"
-                className="flex items-center gap-2.5 text-xs font-bold text-slate-800 hover:text-emerald-700 transition-colors"
+                className="flex items-center gap-2.5 text-xs font-bold text-slate-400 hover:text-emerald-400 transition-colors"
               >
-                <div className="w-7 h-7 rounded-lg bg-emerald-100 border border-emerald-300 flex items-center justify-center text-slate-900">
+                <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
                   <Phone className="w-3.5 h-3.5" />
                 </div>
                 <span>0672-992948</span>
               </a>
             </div>
 
-            <div className="pt-2">
+            <div className="pt-1">
               <a
                 href="/cv_mohamed_merehoum.pdf"
                 download
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-400 text-slate-950 font-extrabold text-xs border border-slate-900 shadow-md"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500 text-slate-950 font-extrabold text-xs border-2 border-amber-400 shadow-[3px_3px_0px_rgba(245,158,11,0.3)] hover:shadow-[1px_1px_0px_rgba(245,158,11,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all"
               >
                 Télécharger CV PDF
               </a>
@@ -125,10 +157,13 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Gradient divider */}
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-700 to-transparent mb-5" />
+
         {/* Bottom Bar */}
-        <div className="py-5 border-t border-slate-300 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3 flex-wrap">
-            <p className="text-xs font-mono font-bold text-slate-600">
+            <p className="text-xs font-mono font-bold text-slate-500">
               © {new Date().getFullYear()} Mohamed MEREHOUM. Tous droits réservés.
             </p>
 
@@ -137,7 +172,7 @@ export default function Footer() {
               onClick={() => setShowDevModal(true)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-slate-900 text-amber-400 text-xs font-mono font-bold shadow-sm border border-slate-800 cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 text-amber-400 text-xs font-mono font-bold border border-slate-700 hover:border-amber-500/50 cursor-pointer transition-all"
             >
               <Code className="w-3.5 h-3.5 text-amber-400" />
               <span>Développé par Amine Jhilel</span>
@@ -146,9 +181,9 @@ export default function Footer() {
 
           <motion.button
             onClick={scrollToTop}
-            whileHover={{ y: -2 }}
+            whileHover={{ y: -3 }}
             whileTap={{ scale: 0.95 }}
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 text-amber-400 text-xs font-mono font-bold shadow-md cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 text-slate-950 text-xs font-mono font-bold border-2 border-amber-400 shadow-[3px_3px_0px_rgba(245,158,11,0.3)] hover:shadow-[1px_1px_0px_rgba(245,158,11,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] transition-all cursor-pointer"
           >
             <span>Haut de page</span>
             <ArrowUp className="w-3.5 h-3.5" />
@@ -159,14 +194,16 @@ export default function Footer() {
       {/* Developer Modal Popup */}
       <AnimatePresence>
         {showDevModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
             <motion.div
               initial={{ opacity: 0, scale: 0.85, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.85, y: 20 }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full max-w-md bg-white rounded-3xl p-7 border-2 border-slate-900 shadow-2xl space-y-6 text-slate-900"
+              className="relative w-full max-w-md bg-white rounded-3xl p-7 border-2 border-slate-900 shadow-[8px_8px_0px_rgba(15,23,42,1)] space-y-6 text-slate-900"
             >
+              {/* Top accent */}
+              <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 via-emerald-400 to-sky-400 rounded-t-3xl" />
               {/* Scotch Tape Header */}
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-6 bg-amber-300 border-x-2 border-dashed border-amber-500 rotate-1 shadow-sm flex items-center justify-center">
                 <span className="font-mono text-[10px] font-black uppercase text-slate-950">DEVELOPER INFO</span>
@@ -180,8 +217,8 @@ export default function Footer() {
                 <X className="w-4 h-4" />
               </button>
 
-              <div className="pt-2 text-center space-y-1">
-                <div className="w-16 h-16 mx-auto rounded-2xl bg-amber-400 border-2 border-slate-900 flex items-center justify-center shadow-md">
+              <div className="pt-3 text-center space-y-1">
+                <div className="w-16 h-16 mx-auto rounded-2xl bg-amber-400 border-2 border-slate-900 flex items-center justify-center shadow-[4px_4px_0px_rgba(15,23,42,1)]">
                   <Code className="w-8 h-8 text-slate-950" />
                 </div>
                 <h3 className="font-bebas text-3xl font-black text-slate-900 tracking-wide pt-2">
@@ -196,7 +233,7 @@ export default function Footer() {
                 {/* Phone */}
                 <a
                   href="tel:+212650475939"
-                  className="flex items-center justify-between p-3.5 rounded-2xl bg-emerald-50 border border-emerald-300 hover:border-emerald-500 transition-all group"
+                  className="flex items-center justify-between p-3.5 rounded-2xl bg-emerald-50 border-2 border-emerald-200 hover:border-emerald-500 transition-all group"
                 >
                   <div className="flex items-center gap-3">
                     <div className="p-2 rounded-xl bg-emerald-300 text-slate-950 border border-slate-900">
@@ -207,7 +244,7 @@ export default function Footer() {
                       <div className="text-sm font-bold text-slate-900 group-hover:text-emerald-700">+212 650-475939</div>
                     </div>
                   </div>
-                  <ExternalLink className="w-4 h-4 text-emerald-600" />
+                  <ExternalLink className="w-4 h-4 text-emerald-500" />
                 </a>
 
                 {/* GitHub */}
@@ -215,7 +252,7 @@ export default function Footer() {
                   href="https://github.com/aminejhilel"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-between p-3.5 rounded-2xl bg-slate-900 text-white border-2 border-slate-900 hover:bg-slate-800 transition-all group"
+                  className="flex items-center justify-between p-3.5 rounded-2xl bg-slate-900 text-white border-2 border-slate-800 hover:bg-slate-800 transition-all group"
                 >
                   <div className="flex items-center gap-3">
                     <div className="p-2 rounded-xl bg-amber-400 text-slate-950">
@@ -235,7 +272,7 @@ export default function Footer() {
                     href="https://www.instagram.com/amine.jhilel.7/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 p-3 rounded-xl bg-rose-50 border border-rose-300 text-slate-900 hover:border-rose-500 transition-all"
+                    className="flex items-center gap-2.5 p-3 rounded-xl bg-rose-50 border-2 border-rose-200 text-slate-900 hover:border-rose-500 transition-all"
                   >
                     <InstagramIcon className="w-4 h-4 text-rose-600" />
                     <span className="text-xs font-bold">Instagram</span>
@@ -245,7 +282,7 @@ export default function Footer() {
                     href="https://linkedin.com/in/aminejhilel"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2.5 p-3 rounded-xl bg-sky-50 border border-sky-300 text-slate-900 hover:border-sky-500 transition-all"
+                    className="flex items-center gap-2.5 p-3 rounded-xl bg-sky-50 border-2 border-sky-200 text-slate-900 hover:border-sky-500 transition-all"
                   >
                     <LinkedinIcon className="w-4 h-4 text-sky-600" />
                     <span className="text-xs font-bold">LinkedIn</span>
@@ -253,10 +290,10 @@ export default function Footer() {
                 </div>
               </div>
 
-              <div className="pt-2 text-center">
+              <div className="pt-1">
                 <button
                   onClick={() => setShowDevModal(false)}
-                  className="w-full py-2.5 rounded-xl bg-slate-900 text-amber-400 text-xs font-mono font-bold shadow-md cursor-pointer"
+                  className="w-full py-2.5 rounded-xl bg-slate-900 text-amber-400 text-xs font-mono font-bold border-2 border-slate-800 shadow-[3px_3px_0px_rgba(245,158,11,0.3)] hover:shadow-none hover:translate-x-[3px] hover:translate-y-[3px] transition-all cursor-pointer"
                 >
                   Fermer
                 </button>

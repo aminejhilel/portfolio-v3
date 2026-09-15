@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useInView, type Variants } from "framer-motion";
-import { UserCheck, MessageSquare, BrainCircuit, CheckSquare, GraduationCap, Sun, Flame } from "lucide-react";
+import { UserCheck, MessageSquare, BrainCircuit, CheckSquare, GraduationCap, Sun, Flame, Sparkles } from "lucide-react";
 import { useRef } from "react";
 
 export default function About() {
@@ -13,28 +13,37 @@ export default function About() {
       title: "Communication & Écoute Active",
       desc: "Gestion optimale de la relation client, présentation dynamique des propositions commerciales et coordination fluide sur le terrain.",
       icon: MessageSquare,
+      accent: "amber",
       border: "border-amber-300",
       badgeColor: "bg-amber-100 text-amber-900 border-amber-300",
-      iconColor: "text-amber-600 bg-amber-50",
+      iconBg: "bg-amber-300",
+      iconColor: "text-amber-950",
       tag: "Soft Skill",
+      emoji: "💬",
     },
     {
       title: "Esprit Analytique & Résolution",
       desc: "Analyse des schémas unifilaires/multifilaires, diagnostic des pannes et réalisation de notes de calcul rigoureuses sous Excel & PVsyst.",
       icon: BrainCircuit,
+      accent: "emerald",
       border: "border-emerald-300",
       badgeColor: "bg-emerald-100 text-emerald-900 border-emerald-300",
-      iconColor: "text-emerald-600 bg-emerald-50",
+      iconBg: "bg-emerald-300",
+      iconColor: "text-emerald-950",
       tag: "Technique",
+      emoji: "🧠",
     },
     {
       title: "Rigueur & Sens du Détail",
       desc: "Précision d'assemblage des structures (Fer H / Profil C), câblage coffrets DC/AC, conformité des plans AutoCAD 2D/3D et respect des normes.",
       icon: CheckSquare,
+      accent: "sky",
       border: "border-sky-300",
       badgeColor: "bg-sky-100 text-sky-900 border-sky-300",
-      iconColor: "text-sky-600 bg-sky-50",
+      iconBg: "bg-sky-300",
+      iconColor: "text-sky-950",
       tag: "Précision",
+      emoji: "🎯",
     },
   ];
 
@@ -52,7 +61,11 @@ export default function About() {
   };
 
   return (
-    <section id="about" className="py-24 paper-canvas relative border-t border-slate-200 overflow-hidden text-slate-900">
+    <section id="about" className="py-24 paper-canvas relative border-t-2 border-slate-900 overflow-hidden text-slate-900 section-accent-top">
+      {/* Ambient blobs */}
+      <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-amber-200/25 blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 -left-10 w-60 h-60 rounded-full bg-emerald-200/20 blur-3xl pointer-events-none" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Section Header */}
@@ -61,28 +74,31 @@ export default function About() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.65 }}
-          className="text-center max-w-3xl mx-auto mb-16 space-y-3"
+          className="text-center max-w-3xl mx-auto mb-16 space-y-4"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 text-amber-400 text-xs font-mono font-bold shadow-md">
-            <UserCheck className="w-4 h-4" />
+          <div className="section-badge">
+            <UserCheck className="w-3.5 h-3.5" />
             <span>À PROPOS & ATOUTS</span>
           </div>
-          <h2 className="font-bebas text-5xl sm:text-6xl font-black text-slate-900 tracking-tight">
-            PROFIL <span className="text-amber-500 underline decoration-amber-400 decoration-wavy decoration-2">PROFESSIONNEL</span>
+          <h2 className="section-heading text-5xl sm:text-6xl">
+            PROFIL <span className="text-amber-500 wavy-underline">PROFESSIONNEL</span>
           </h2>
-          <p className="text-slate-700 text-base sm:text-lg leading-relaxed font-body">
+          <p className="text-slate-600 text-base sm:text-lg leading-relaxed font-body">
             Une approche rigoureuse combinant compétences de chantier et maîtrise de l&apos;ingénierie solaire.
           </p>
         </motion.div>
 
-        {/* Profile Card */}
+        {/* Profile Card — dark-accented */}
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 40 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7, delay: 0.1 }}
-          className="relative bg-white rounded-3xl p-8 sm:p-12 mb-12 border-2 border-slate-900 shadow-2xl overflow-hidden"
+          className="relative bg-white rounded-3xl p-8 sm:p-12 mb-12 border-2 border-slate-900 shadow-[6px_6px_0px_rgba(15,23,42,1)] overflow-hidden"
         >
+          {/* Top accent bar */}
+          <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-amber-400 via-emerald-400 to-sky-400 rounded-t-3xl" />
+
           {/* Tape Strip Header */}
           <div className="absolute -top-4 left-12 w-32 h-7 bg-amber-300 border-x-2 border-dashed border-amber-500 rotate-1 shadow-sm flex items-center justify-center">
             <span className="font-mono text-xs font-black text-slate-950 uppercase">FORMA-PFE</span>
@@ -93,7 +109,7 @@ export default function About() {
             <motion.div
               whileHover={{ rotate: [0, -6, 6, 0], scale: 1.05 }}
               transition={{ duration: 0.5 }}
-              className="p-5 rounded-2xl bg-amber-100 border-2 border-slate-900 shrink-0 shadow-md"
+              className="p-5 rounded-2xl bg-amber-100 border-2 border-slate-900 shrink-0 shadow-[4px_4px_0px_rgba(15,23,42,1)]"
             >
               <GraduationCap className="w-12 h-12 text-slate-900" />
             </motion.div>
@@ -103,7 +119,7 @@ export default function About() {
                 <h3 className="font-heading text-2xl font-extrabold text-slate-900">
                   Parcours IFMEREE & Expérience PFE
                 </h3>
-                <span className="text-xs font-bold px-3 py-1 rounded-lg bg-emerald-100 text-emerald-900 font-mono border border-emerald-300 shadow-xs">
+                <span className="text-xs font-bold px-3 py-1 rounded-lg bg-emerald-100 text-emerald-900 font-mono border-2 border-emerald-300 shadow-[2px_2px_0px_rgba(16,185,129,0.3)]">
                   2024 – 2026
                 </span>
               </div>
@@ -118,9 +134,9 @@ export default function About() {
               </p>
               <p className="text-slate-700">
                 Ma formation m&apos;a également doté de solides compétences en dimensionnement{" "}
-                <span className="font-bold text-amber-700">(PVsyst 7.4, PVSol)</span>, en élaboration de schémas électriques{" "}
-                <span className="font-bold text-sky-700">AutoCAD</span> et en modélisation 3D{" "}
-                <span className="font-bold text-emerald-700">SketchUp</span>.
+                <span className="font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded-md border border-amber-200">(PVsyst 7.4, PVSol)</span>, en élaboration de schémas électriques{" "}
+                <span className="font-bold text-sky-700 bg-sky-50 px-1.5 py-0.5 rounded-md border border-sky-200">AutoCAD</span> et en modélisation 3D{" "}
+                <span className="font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-md border border-emerald-200">SketchUp</span>.
               </p>
 
               {/* Quick facts */}
@@ -129,9 +145,10 @@ export default function About() {
                   { icon: Sun, text: "Énergie solaire photovoltaïque", color: "bg-amber-100 text-amber-950 border-amber-300" },
                   { icon: Flame, text: "Terrain & Installation DC/AC", color: "bg-orange-100 text-orange-950 border-orange-300" },
                   { icon: CheckSquare, text: "Dimensionnement & Études", color: "bg-emerald-100 text-emerald-950 border-emerald-300" },
+                  { icon: Sparkles, text: "PFE LEAR Meknès 1.4 MW", color: "bg-sky-100 text-sky-950 border-sky-300" },
                 ].map(({ icon: Icon, text, color }) => (
-                  <span key={text} className={`flex items-center gap-1.5 text-xs font-extrabold px-3 py-1.5 rounded-xl border shadow-xs ${color}`}>
-                    <Icon className="w-4 h-4" />
+                  <span key={text} className={`flex items-center gap-1.5 text-xs font-extrabold px-3 py-1.5 rounded-xl border-2 shadow-sm ${color} transition-transform hover:-translate-y-0.5`}>
+                    <Icon className="w-3.5 h-3.5" />
                     {text}
                   </span>
                 ))}
@@ -154,22 +171,27 @@ export default function About() {
               <motion.div
                 key={idx}
                 variants={itemVariants}
-                whileHover={{ y: -6, scale: 1.02 }}
-                className={`bg-white rounded-2xl p-7 border-2 ${item.border} space-y-4 relative overflow-hidden group shadow-lg`}
+                whileHover={{ y: -8, rotate: idx % 2 === 0 ? -0.5 : 0.5 }}
+                className={`bg-white rounded-2xl p-7 border-2 ${item.border} space-y-4 relative overflow-hidden group shadow-[4px_4px_0px_rgba(15,23,42,0.15)] hover:shadow-[6px_6px_0px_rgba(15,23,42,0.2)] transition-all`}
               >
+                {/* Top accent */}
+                <div className={`absolute top-0 left-0 right-0 h-1 ${item.iconBg} rounded-t-2xl`} />
+
                 <div className="relative z-10">
-                  <div className="mb-3">
-                    <span className={`text-[11px] font-mono font-bold px-2.5 py-1 rounded-md border ${item.badgeColor}`}>
+                  {/* Emoji + badge row */}
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-2xl">{item.emoji}</span>
+                    <span className={`text-[10px] font-mono font-bold px-2.5 py-1 rounded-md border-2 ${item.badgeColor}`}>
                       {item.tag}
                     </span>
                   </div>
 
-                  <div className={`w-14 h-14 rounded-2xl ${item.iconColor} border-2 border-slate-900 flex items-center justify-center mb-4 shadow-md`}>
-                    <Icon className="w-7 h-7" />
+                  <div className={`w-14 h-14 rounded-2xl ${item.iconBg} border-2 border-slate-900 flex items-center justify-center mb-4 shadow-[3px_3px_0px_rgba(15,23,42,0.3)]`}>
+                    <Icon className={`w-7 h-7 ${item.iconColor}`} />
                   </div>
 
                   <h4 className="font-heading text-xl font-extrabold text-slate-900 mb-2">{item.title}</h4>
-                  <p className="text-sm text-slate-700 leading-relaxed font-body">{item.desc}</p>
+                  <p className="text-sm text-slate-600 leading-relaxed font-body">{item.desc}</p>
                 </div>
               </motion.div>
             );
